@@ -1,0 +1,37 @@
+1. Create a RDD of prime numbers from 1 to 100.
+
+import org.apache.spark.{SparkConf,SparkContext}
+object ScalaDemo{
+  def main(args : Array[String]){
+    val sparkConf= new SparkConf().setAppName("Average").setMaster("local")
+    val sparkContext= new SparkContext(sparkConf)
+    var a = List.newBuilder[Int]
+    for(i<-1 to 100 ) {
+     if (isPrime(i)) {
+        a+=i
+     }
+    }
+    val input = sparkContext.parallelize(a.result())
+    println(input.collect.mkString(","))
+  }
+  def isPrime(n: Int) =(2 until n) forall(n %_ !=0)
+}
+
+2. Find the square root of even numbers from 1 to 100.
+
+import org.apache.spark.{SparkConf,SparkContext}
+object ScalaDemo{
+  def main(args : Array[String]){
+    val sparkConf= new SparkConf().setAppName("Average").setMaster("local")
+    val sparkContext= new SparkContext(sparkConf)
+    var a = List.newBuilder[Double]
+    for(i<-1 to 100 ) {
+     if (isEven(i)) {
+        a+= Math.sqrt(i)
+     }
+    }
+    val input = sparkContext.parallelize(a.result())
+    println(input.collect.mkString(","))
+  }
+  def isEven(n: Int) = n%2==0
+}
